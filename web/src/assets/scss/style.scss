@@ -1,0 +1,341 @@
+@import  './variables';
+
+
+//reset，样式重置
+*{
+	box-sizing: border-box;//设置了宽度100%后再加padding不会把左右撑大
+	outline: none;//去掉高亮
+}
+html{
+	font-size: 13px;
+}
+body{
+	margin: 0;
+	padding: 0;
+	font-family: Arial, Helvetica, sans-serif;
+	line-height: 1.2em;//当前这一行字高度的1.2倍
+	background-color: #F1F1F1;
+}
+a{
+	color: #999;
+	text-decoration-line: none;
+}
+ul{
+	list-style: none;
+}
+p{
+	margin: 0;
+}
+.btn{
+	border: none;
+	border-radius: 2px;
+}
+
+
+
+
+//flex布局
+.d-flex{
+	display: flex;
+}
+.flex-column{//纵向排列
+	flex-direction: column;
+}
+.flex-wrap{//能够换行
+	flex-wrap: wrap;
+}
+.flex-1{
+	flex: 1;//本身增大，占据剩余的空间
+}
+.flex-grow-1{
+	flex-grow: 1;
+}
+@each $key,$value in $flex-jc {
+	.jc-#{$key}{
+		justify-content: $value;
+	}
+}
+@each $key,$value in $flex-ai {
+	.ai-#{$key}{
+		align-items: $value;
+	}
+}
+
+
+
+
+//colors，定义颜色
+@each $colorKey,$color in $colors {
+	.text-#{$colorKey}{//文字颜色
+		color: $color;
+	}
+	
+	.bg-#{$colorKey}{//背景颜色
+		background-color: $color;
+	}
+}
+
+
+
+
+//text-align，定义文本对齐方式
+@each $var in (left, center, right) {
+	.text-#{$var}{
+		text-align: $var !important;
+	}
+}
+//文本溢出后显示省略号
+.text-ellipse{
+	display: inline-block;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;//不换行
+}
+//font-size,定义文本字体大小
+@each $sizeKey,$size in $font-sizes {
+	.fs-#{$sizeKey}{
+		font-size: $size * $base-font-size;
+	}
+}
+
+
+
+
+//宽度
+.w-100{
+	width: 100%;
+}
+.h-100{
+	width: 100%;
+}
+
+
+
+//边距
+//.mt-1 => margin-top: 			.pb-2 => padding-bottom: 
+@each $typeKey,$type in $spacing-types {
+	//.m-0
+	@each $sizeKey,$size in $spacing-sizes {
+		.#{$typeKey}-#{$sizeKey} {
+			#{$type}: $size * $spacing-base-size;
+		}
+	}
+	
+	//.mx-0，.my-0 水平相等，纵向相等
+	@each $sizeKey,$size in $spacing-sizes {
+		.#{$typeKey}x-#{$sizeKey} {
+			#{$type}-left: $size * $spacing-base-size;
+			#{$type}-right: $size * $spacing-base-size;
+		}
+		.#{$typeKey}y-#{$sizeKey} {
+			#{$type}-top: $size * $spacing-base-size;
+			#{$type}-bottom: $size * $spacing-base-size;
+		}
+	}
+	
+	//.mt-0
+	@each $directionKey,$direction in $spacing-direction {
+		@each $sizeKey,$size in $spacing-sizes {
+			.#{$typeKey}#{$directionKey}-#{$sizeKey} {
+				#{$type}-#{$direction}: $size * $spacing-base-size;
+			}
+		}
+	}
+}
+
+
+
+
+
+//技能图标
+.hero-icon{
+	background: url(../images/hero-attrsp.png) no-repeat 0 0;
+	background-size: 137px 154.1px;
+	width: 13px;
+	height: 13px;
+	@each $difKey,$dif in $difficult {
+		&.difficult-#{$difKey}{
+			background-position: $dif;
+		}
+	}
+	@each $skiKey,$ski in $skills {
+		&.skills-#{$skiKey}{
+			background-position: $ski;
+		}
+	}
+	@each $attackKey,$attack in $attack {
+		&.attack-#{$attackKey}{
+			background-position: $attack;
+		}
+	}
+	@each $surKey,$sur in $survive {
+		&.survive-#{$surKey}{
+			background-position: $sur;
+		}
+	}
+}
+
+
+
+
+//nav
+.nav {
+	display: flex;
+	.nav-item{
+		border-bottom: 3px solid transparent;//transparent透明
+		padding-bottom: 0.2rem;
+		&.active {
+			color: map-get($colors, 'primary');
+			border-bottom-color: map-get($colors, 'primary');
+		}
+	}
+	
+	&.nav-inverse{
+		.nav-item{
+			color: map-get($colors, 'white');
+			&.active {
+				border-bottom-color: map-get($colors, 'white');
+			}
+		}
+	}
+}
+
+
+
+
+
+//sprite
+.sprite{
+	background: url(../images/index.png) no-repeat 0 0;/* no-repeat不重复， 0 0左上角对齐*/
+	background-size: 28.846153rem 35rem;
+	display: inline-block;
+	&.sprite-news{//爆料站
+		background-position: 63.546% 15.517%;
+		width: 1.76923rem;
+		height: 1.538461rem;
+	}
+	&.sprite-story{//故事站
+		background-position: 90.483% 15.614%;
+		width: 1.76923rem;
+		height: 1.538461rem;
+	}
+	&.sprite-store{//周边商城
+		background-position: 36.746% 0.924%;
+		width: 19px;
+		height: 22px;
+	}
+	&.sprite-dnf{//体验服
+		background-position: 10.408% 15.517%;
+		width: 20px;
+		height: 20px;
+	}
+	&.sprite-numans{//新人专区
+		background-position: 89.733% 1.266%;
+		width: 20px;
+		height: 21px;
+	}
+	&.sprite-glory{//荣耀·传承
+		background-position: 36.467% 15.287%;
+		width: 24px;
+		height: 20px;
+	}
+	&.sprite-campsite{//王者营地
+		background-position: 63.3% 0.927%;
+		width: 24px;
+		height: 24px;
+	}&.sprite-bjnews{//公众号
+		background-position: 0 96.207%;
+		width: 24px;
+		height: 20px;
+	}
+	&.sprite-versions{//版本介绍
+		background-position: 10.776% 96.145%;
+		width: 27px;
+		height: 27px;
+	}
+	&.sprite-game{//对局环境
+		background-position: 21.61% 95.723%;
+		width: 40px;
+		height: 23px;
+	}
+	&.sprite-kgroup{//无限王者团
+		background-position: 36.802% 94.482%;
+		width: 44px;
+		height: 11px;
+	}
+	&.sprite-creative{//创意互动营
+		background-position: 50.072% 96.047%;
+		width: 29px;
+		height: 25px;
+	}
+	
+	//收起箭头
+	&.sprite-arrow{
+		background-position: 38.577% 52.076%;
+		width: 10px;
+		height: 10px;
+	}
+	
+	
+	//新闻资讯
+	&.sprite-journalism{//新闻资讯
+		background-position: 0.138% 50.452%;
+		width: 13px;
+		height: 13px;
+	}
+	&.sprite-spot{//三个点
+		background-position: 47.619% 56.305%;
+		width: 18px;
+		height: 3px;
+	}
+	
+	
+	//英雄列表
+	&.sprite-hero{
+		background-position: 46.768% 60.452%;
+		width: 12px;
+		height: 13px;
+	}
+	
+	//精彩视频
+	&.sprite-video{
+		background-position: 0.138% 56.532%;
+		width: 13px;
+		height: 11px;
+	}
+	
+	//出装推荐
+	&.sprite-recommend{
+		background-position: 0 44.91%;
+		width: 13px;
+		height: 13px;
+	}
+	
+	//使用技巧
+	&.sprite-Skill{
+		background-position: 0 35.561%;
+		width: 14px;
+		height: 14px;
+	}
+	
+	//对抗思路
+	&.sprite-confront{
+		background-position: 0 31.144%;
+		width: 14px;
+		height: 14px;
+	}
+	
+	//团战思路
+	&.sprite-team{
+		background-position: 0 26.923%;
+		width: 13px;
+		height: 13px;
+	}
+	
+	//英雄关系
+	&.sprite-relationship{
+		background-position: 0 40.045%;
+		width: 13px;
+		height: 13px;
+	}
+}
